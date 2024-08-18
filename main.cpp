@@ -1,13 +1,13 @@
 #include <iostream>
 
 #include "LinkedList.h"
-
+#include "DoublyLinkedList.h"
 
 
 int main()
 {
-	SampleLinkedList();
-
+	//SampleLinkedList();
+	SampleDoublyLinkedList();
 
 	std::cin.get();
 }

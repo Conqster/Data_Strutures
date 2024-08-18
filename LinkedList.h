@@ -17,10 +17,11 @@ class LinkedList
 		T data;
 		Node* next = nullptr;
 
+		Node() : data(0), next(nullptr){}
+
 		Node(T _data)
-		{
-			data = _data;
-		}
+			: data(_data), next(nullptr)
+		{}
 	};
 
 	Node* head = nullptr;
@@ -67,7 +68,7 @@ public:
 			std::cout << "out of bounds !!!!!!!!!\n";
 		}
 
-		//use to read down the list for vacancies, a next nullptr 
+
 		Node* current = head;
 
 		for (int i = 0; i < idx; i++)
@@ -283,6 +284,10 @@ public:
 };
 
 
+
+/////////////////////////////////////////////////////////
+// Sample
+/////////////////////////////////////////////////////////
 
 
 void SampleLinkedList()

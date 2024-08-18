@@ -26,5 +26,8 @@
     <ClInclude Include="TimeTaken.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="DoublyLinkedList.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
