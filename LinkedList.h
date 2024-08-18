@@ -194,17 +194,13 @@ public:
 
 	void Pop()
 	{
+		if (count == 0)
+		{
+			std::cout << "List is empty.........\n";
+			return;
+		}
+
 		Node* current = head;
-		//Node* temp = nullptr;
-
-		//while (current != nullptr)
-		//{
-		//	//temp = current->next;
-		//	//delete current;
-		//	//current = temp;
-
-		//	current = current->next;
-		//}
 
 		//this get the secons to the last node/element
 		for (int i = 0; i < count - 2; i++)
