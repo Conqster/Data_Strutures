@@ -59,6 +59,54 @@ public:
 		std::cout << "Doubly Linked list created with count " << count << "\n";
 	}
 
+	~DoublyLinkedList()
+	{
+		std::cout << "================================Closing Closing================================\n ";
+		Debug_All_Nodes();
+		if (head)
+		{
+			Node* current = head;
+
+			//for safety
+			head = nullptr;
+			tail = nullptr;
+
+			int interation = 0;
+
+			while (current)
+			{
+				//Self deletion 
+				if (current->next)
+				{
+					//set prev ptr to self = nullptr 
+					if(current->prev)
+						current->prev->next = nullptr;
+
+					//move forward
+					current = current->next;
+
+					//the deletion, as i've advanced then set to nullptr
+					delete current->prev;
+					current->prev = nullptr;
+				}
+				else
+				{
+					//if next does not exist, self destruct
+					delete current;
+					current = nullptr;
+				}
+
+				interation++;
+			}
+
+			std::cout << "Closing Loop interations : " << interation << "\n";
+
+			std::cout << "================================Closing Finished deletion================================\n ";
+			Debug_All_Nodes();
+
+		}
+	}
+
 	inline Node* DebugHeadNode() const { return head; }
 	inline Node* DebugTailNode() const { return tail; }
 	inline unsigned int Count() const { return count; }
@@ -67,7 +115,7 @@ public:
 	{
 		Node* new_node = new Node(data);
 
-		if (head == nullptr)
+		if (!head)
 		{
 			head = new_node;
 			tail = new_node;
@@ -95,7 +143,7 @@ public:
 
 	T operator[](int idx)
 	{
-		if (head == nullptr || idx > count - 1)
+		if (!head || idx > count - 1)
 		{
 			std::cout << "out of bounds !!!!!!!!!\n";
 		}
@@ -106,7 +154,7 @@ public:
 
 	void Pop_At(int idx)
 	{
-		if (head == nullptr || idx > count - 1)
+		if (!head || idx > count - 1)
 		{
 			std::cout << "out of bounds !!!!!!!!!\n";
 			return;
@@ -254,8 +302,9 @@ public:
 			current = current->next;
 		}
 
-		if (found == nullptr)
+		if (!found)
 			return;
+
 		std::cout << "found after " << iterations << " iterations!!!!!!\n";
 
 		found->prev->next = found->next;
@@ -287,7 +336,7 @@ public:
 
 	void DebugLoop_AllNode(int times = 2)
 	{
-		if (head == nullptr)
+		if (!head)
 			return;
 
 		Node* current = head;
@@ -303,7 +352,7 @@ public:
 
 	void Debug_All_Nodes_Wc_Links()
 	{
-		if (head == nullptr)
+		if (!head)
 			return;
 
 		Node* current = head;
@@ -458,5 +507,6 @@ void SampleDoublyLinkedList()
 
 	std::cout << "Debuging all nodes 3 interations\n";
 	list.DebugLoop_AllNode(3);
-
+	list.Pop();
+	list.Pop();
 }

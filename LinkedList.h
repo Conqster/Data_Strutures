@@ -33,17 +33,35 @@ public:
 		std::cout << "Linked list created with count " << count << "\n";
 	}
 
+	~LinkedList()
+	{
+		if (head)
+		{
+			Node* current = head;
+
+			head = nullptr;
+
+			while (current)
+			{
+				Node* temp = current;
+				current = current->next;
+				delete temp;
+			}
+
+		}
+	}
+
 	inline Node* NodeHead() const { return head; }
 	inline unsigned int Count() const { return count; }
 
-	void Push(T data)
+	void Push_Back(T data)
 	{
 		Node* new_node = new Node(data);
 
 		//std::cout << "Created node with data: " << new_node << "\n";
 
 		//set new_node as head
-		if (head == nullptr)
+		if (!head)
 		{
 			head = new_node;
 			count++;
@@ -53,17 +71,61 @@ public:
 		//use to read down the list for vacancies, a next nullptr 
 		Node* current = head;
 
-		while (current->next != nullptr)
+		while (current->next)
 			current = current->next;
 
 		current->next = new_node;
 		count++;
 	}
 
+	void Push_Front(T data)
+	{
+		Node* new_node = new Node(data);
+
+		//A list a, b, c, 
+		// to as an element d @ front to become => d, a, b, c, i.e head == d 
+		// d next> a, a next> remains the same b 
+		// head becomes d from a 
+
+		if (head)
+			new_node->next = head;
+
+		head = new_node;
+		count++;
+	}
+
+	T Top_Front()
+	{
+		if (!head)
+			throw std::out_of_range("List is empty!!!!!!!!");
+
+		return head->data;
+	}
+
+	T Top_Back()
+	{
+		//return the last element 
+		//since i am keeping track of the count should be fine
+
+		if (!head)
+			throw std::out_of_range("List is empty!!!!!!!!");
+
+
+
+		Node* current = head;
+
+		for (int i = 0; i < (count - 1); i++)
+			current = current->next;
+
+		return current->data;
+
+		//return (LinkedList<T>)*this[count];
+	}
+
 
 	T operator[](int idx)
 	{
-		if (head == nullptr || idx > count - 1)
+		if (!head || idx > count - 1)
 		{
 			std::cout << "out of bounds !!!!!!!!!\n";
 		}
@@ -80,7 +142,7 @@ public:
 
 	void Pop_At(int idx)
 	{
-		if (head == nullptr || idx > count - 1)
+		if (!head || idx > count - 1)
 		{
 			std::cout << "out of bounds !!!!!!!!!\n";
 			return;
@@ -183,16 +245,16 @@ public:
 			return;
 
 		//In the hope that template T supports operator << for printing
-		while (current != nullptr)
+		while (current)
 		{
-			std::cout << "Element/Node " << idx << ": " << current->data << "\n";
+ 			std::cout << "Element/Node " << idx << ": " << current->data << "\n";
 			idx++;
 			current = current->next;
 		}
 	}
 
 
-	void Pop()
+	void Pop_Back()
 	{
 		if (count == 0)
 		{
@@ -211,6 +273,23 @@ public:
 		current->next = nullptr;
 		count--;
 
+	}
+
+	void Pop_Front()
+	{
+		if (!head)
+		{
+			//throw std::out_of_range("List is empty!!!!!!!!");
+			return;
+		}
+
+		//A list a, b, c, d
+		//Pop_Front removes a 
+		//prev, head == a & (a next> b )
+		//after head == b  & (b next> c remains the same) 
+
+		head = head->next;
+		count--;
 	}
 
 
@@ -249,7 +328,7 @@ public:
 	{
 		//current sample will null, if we are sampling the last (tail) node's next
 		//i.e its prev is the last node
-		if (current == nullptr)
+		if (!current)
 			return prev;
 
 		Node* nxt = current->next;
@@ -264,13 +343,12 @@ public:
 		Node* current = head;
 		Node* nxt = nullptr;
 
-		while (current != nullptr)
+		while (current)
 		{
 			nxt = current->next;
 			current->next = prev;
 			prev = current;
 			current = nxt;
-
 		}
 
 		return prev;
@@ -279,6 +357,50 @@ public:
 	
 };
 
+
+
+
+void NewSampleList()
+{
+	LinkedList<std::string> list;
+
+	list.Push_Back("Jack");
+	list.Push_Back("Jake");
+
+
+	std::cout << "Print all the element in the list and Jake should be the last item!!!!!!!\n";
+
+	list.Debug_All_Nodes();
+
+	std::cout << "The first element of the list should be 'Jack' : " << list.Top_Front() << "\n";
+
+	std::cout << " Adding Sam at the front !!!!!!!!\n";
+
+	list.Push_Front("Sam");
+
+	list.Debug_All_Nodes();
+
+	std::cout << "The last element of the list should be 'Jake' : " << list.Top_Back() << "\n";
+
+	list.Pop_Back();
+
+	std::cout << "Deleted / Pop the last element in the list. \n ";
+
+	list.Debug_All_Nodes();
+
+	list.Push_Back("Nick");
+	list.Push_Back("Nike");
+	std::cout << "Added Nick & Nike !!!!!!!\n";
+
+	list.Pop_Front();
+
+	std::cout << "Deleted / Pop the first elment in the list.\n";
+	list.Pop_Front();
+	list.Pop_Front();
+	list.Pop_Front();
+	list.Pop_Front();
+	list.Debug_All_Nodes();
+}
 
 
 /////////////////////////////////////////////////////////
@@ -312,11 +434,11 @@ void SampleLinkedList()
 	////////////////////////////////////////////////
 	//Adding element to list using Push()
 	////////////////////////////////////////////////
-	list.Push("Hill");
-	list.Push("Jack");
-	list.Push("Nick");
-	list.Push("Jill");
-	list.Push("Jay");
+	list.Push_Back("Hill");
+	list.Push_Back("Jack");
+	list.Push_Back("Nick");
+	list.Push_Back("Jill");
+	list.Push_Back("Jay");
 
 	std::cout << "My list count " << list.Count() << "\n";
 	std::cout << "First/Head node is " << list.NodeHead()->data << "\n";
@@ -409,7 +531,7 @@ void SampleLinkedList()
 	// Test Pop, to delete last element
 	////////////////////////////////////////////////////
 	std::cout << "count before Pop " << list.Count() << "\n";
-	list.Pop();
+	list.Pop_Back();
 	std::cout << "count after Pop " << list.Count() << "\n";
 }
 
