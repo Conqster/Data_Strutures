@@ -32,5 +32,8 @@
     <ClInclude Include="Stack.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryTree.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,21 +1,24 @@
 #include <iostream>
 
 #include "LinkedList.h"
-#include "DoublyLinkedList.h"
+//#include "DoublyLinkedList.h"
 
 #include "Stack.h"
+#include "BinaryTree.h"
 
 
 int main()
 {
 	//SampleLinkedList();
-	SampleDoublyLinkedList();
+	//SampleDoublyLinkedList();
 
 	//SampleStack();
 	//SampleLinkStack();
 
 
-	//'NewSampleList();
+	//NewSampleList();
+
+	SampleTree();
 
 	std::cin.get();
 }

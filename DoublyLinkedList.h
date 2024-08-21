@@ -6,30 +6,32 @@
 #pragma once
 
 template<typename T>
+struct Node
+{
+	T data;
+	Node* next = nullptr;
+	Node* prev = nullptr;
+
+
+	Node() : data(0), next(nullptr), prev(nullptr) {}
+
+	Node(T _data)
+		: data(_data), next(nullptr), prev(nullptr) {}
+};
+
+
+template<typename T>
 class DoublyLinkedList
 {
-	struct Node
-	{
-		T data;
-		Node* next = nullptr;
-		Node* prev = nullptr;
-
-
-		Node() : data(0), next(nullptr), prev(nullptr) {}
-
-		Node(T _data)
-			: data(_data), next(nullptr), prev(nullptr) {}
-	};
-
-	Node* head = nullptr;
-	Node* tail = nullptr;
+	Node<T>* head = nullptr;
+	Node<T>* tail = nullptr;
 
 	unsigned int count = 0;
 
 
-	Node* GetNode_At(int idx)
+	Node<T>* GetNode_At(int idx)
 	{
-		Node* current = head;
+		Node<T>* current = head;
 
 		if (idx < count / 2)
 		{
@@ -65,7 +67,7 @@ public:
 		Debug_All_Nodes();
 		if (head)
 		{
-			Node* current = head;
+			Node<T>* current = head;
 
 			//for safety
 			head = nullptr;
@@ -107,13 +109,13 @@ public:
 		}
 	}
 
-	inline Node* DebugHeadNode() const { return head; }
-	inline Node* DebugTailNode() const { return tail; }
+	inline Node<T>* DebugHeadNode() const { return head; }
+	inline Node<T>* DebugTailNode() const { return tail; }
 	inline unsigned int Count() const { return count; }
 
 	void Push(T data)
 	{
-		Node* new_node = new Node(data);
+		Node<T>* new_node = new Node<T>(data);
 
 		if (!head)
 		{
@@ -172,7 +174,7 @@ public:
 		}
 
 		//To-do: later check to traversal forwards / backward based on the list count and provided idx
-		Node* current = GetNode_At(idx);
+		Node<T>* current = GetNode_At(idx);
 
 		//Np N Nn ===== Goal to remove N
 		// N - current node, Np - its previous, Nn - its next
@@ -195,7 +197,7 @@ public:
 		}
 
 
-		Node* new_node = new Node(data);
+		Node<T>* new_node = new Node<T>(data);
 		//New head is required, as inserting to idx 0 
 		//the old head is fighting for its place and would shift new node back which make it look it tail
 		if (idx == 0)
@@ -217,7 +219,7 @@ public:
 		}
 
 		
-		Node* current = GetNode_At(idx);
+		Node<T>* current = GetNode_At(idx);
 
 		std::cout << "This current node is " << current->data << "\n";
 
@@ -234,7 +236,7 @@ public:
 
 	int Find_idx(T data)
 	{
-		Node* current = head;
+		Node<T>* current = head;
 
 		if (!current)
 			return -1;
@@ -260,7 +262,7 @@ public:
 			return;
 		}
 
-		Node* temp = tail->prev; //secons to the last element become tail;
+		Node<T>* temp = tail->prev; //secons to the last element become tail;
 		//the next element for the "Previous element to the tail" is now the head
 		temp->next = head;
 		head->prev = temp;    //heads prev is now second to the last element 
@@ -275,8 +277,8 @@ public:
 	void Remove(T data)
 	{
 
-		Node* current = head;
-		Node* found = nullptr;
+		Node<T>* current = head;
+		Node<T>* found = nullptr;
 
 		if (!current)
 			return;
@@ -339,7 +341,7 @@ public:
 		if (!head)
 			return;
 
-		Node* current = head;
+		Node<T>* current = head;
 
 		//In the hope that template T supports operator << for printing
 		//using a for loop, as a while loop might cause an endless loop
@@ -355,7 +357,7 @@ public:
 		if (!head)
 			return;
 
-		Node* current = head;
+		Node<T>* current = head;
 
 		//In the hope that template T supports operator << for printing
 		//using a for loop, as a while loop might cause an endless loop

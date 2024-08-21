@@ -233,25 +233,6 @@ public:
 	}
 
 
-	/// <summary>
-	/// Your data type should support operator << 
-	/// </summary>
-	void Debug_All_Nodes()
-	{
-		Node* current = head;
-		int idx = 0;
-
-		if (!current)
-			return;
-
-		//In the hope that template T supports operator << for printing
-		while (current)
-		{
- 			std::cout << "Element/Node " << idx << ": " << current->data << "\n";
-			idx++;
-			current = current->next;
-		}
-	}
 
 
 	void Pop_Back()
@@ -353,6 +334,31 @@ public:
 
 		return prev;
 	}
+
+
+	/////////////////////////////////////////////////////////
+	// DEBUGGER'S
+	/////////////////////////////////////////////////////////
+	/// <summary>
+	/// Your data type should support operator << 
+	/// </summary>
+	void Debug_All_Nodes()
+	{
+		Node* current = head;
+		int idx = 0;
+
+		if (!current)
+			return;
+
+		//In the hope that template T supports operator << for printing
+		while (current)
+		{
+			std::cout << "Element/Node " << idx << ": " << current->data << "\n";
+			idx++;
+			current = current->next;
+		}
+	}
+
 
 	
 };
