@@ -32,6 +32,29 @@ public:
 
 	Node<T>* GetRoot() { return root; }
 
+	~BinaryTree()
+	{
+		std::cout << "Start clean up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
+		std::cout << "before\n";
+		
+		PostOrderTraversal(root);
+
+		
+		PostOrderTranversalDeletion(root);
+	}
+
+
+	void PostOrderTranversalDeletion(Node<T>* node)
+	{
+		if (!node)
+			return;
+
+		PostOrderTranversalDeletion(node->left);
+		PostOrderTranversalDeletion(node->right);
+		delete node;
+	}
+
+
 
 	void Add(T key)
 	{
@@ -111,6 +134,32 @@ public:
 		std::cout << node->key << "\n";
 	}
 
+	/////////////////////////////////////////////////////////
+	// LEVEL TRAVERSAL (Breadth First): almost as similar to pre-order 
+	/////////////////////////////////////////////////////////
+	void LevelTraversal(Node<T>* tree)
+	{
+		if (!tree)
+			return;
+
+		Queue<Node<T>*> q;
+
+		q.Enqueue(tree);
+
+		while (!q.Empty())
+		{
+			Node<T>* n = q.Dequeue();
+
+			std::cout << n->key << "\n";
+
+			if (n->left)
+				q.Enqueue(n->left);
+
+			if (n->right)
+				q.Enqueue(n->right);
+		}
+	}
+
 
 };
 
@@ -143,6 +192,7 @@ void SampleTree()
 	myTree.PreOrderTraversal(myTree.GetRoot());
 	std::cout << "======================================Post-Order Tranversal=============================================\n";
 	myTree.PostOrderTraversal(myTree.GetRoot());
-
+	std::cout << "======================================Level Tranversal=============================================\n";
+	myTree.LevelTraversal(myTree.GetRoot());
 
 }

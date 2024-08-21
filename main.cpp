@@ -4,6 +4,8 @@
 //#include "DoublyLinkedList.h"
 
 #include "Stack.h"
+#include "Queue.h"
+
 #include "BinaryTree.h"
 
 
@@ -17,6 +19,8 @@ int main()
 
 
 	//NewSampleList();
+
+	//SampleQueue();
 
 	SampleTree();
 
