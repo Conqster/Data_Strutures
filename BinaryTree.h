@@ -146,18 +146,29 @@ public:
 
 		q.Enqueue(tree);
 
+		int level_count = 0;
+
 		while (!q.Empty())
 		{
 			Node<T>* n = q.Dequeue();
+			
 
 			std::cout << n->key << "\n";
 
-			if (n->left)
-				q.Enqueue(n->left);
+			if (n->left || n->right)
+			{
+				if (n->left)
+					q.Enqueue(n->left);
 
-			if (n->right)
-				q.Enqueue(n->right);
+				if (n->right)
+					q.Enqueue(n->right);
+
+				level_count++;
+			}
+
 		}
+
+		std::cout << "[LEVEL COUNT]: " << level_count << "\n";
 	}
 
 
